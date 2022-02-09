@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1069.0",
+    "aws-sdk": "^2.1071.0",
     "chokidar": "^3.5.3",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
