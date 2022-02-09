@@ -4,36 +4,36 @@ module.exports = class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        email: {
-          type: Sequelize.STRING(40),
-          allowNull: true,
+        name: {
+          type: Sequelize.STRING(20),
+          allowNull: false,
           unique: true,
         },
-        nick: {
-          type: Sequelize.STRING(15),
+        age: {
+          type: Sequelize.INTEGER.UNSIGNED,
           allowNull: false,
         },
-        password: {
-          type: Sequelize.STRING(100),
-          allowNull: true,
-        },
-        provider: {
-          type: Sequelize.STRING(10),
+        married: {
+          type: Sequelize.BOOLEAN,
           allowNull: false,
-          defaultValue: "local",
         },
-        snsId: {
-          type: Sequelize.STRING(30),
+        comment: {
+          type: Sequelize.TEXT,
           allowNull: true,
+        },
+        created_at: {
+          type: Sequelize.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.NOW,
         },
       },
       {
         sequelize,
-        timestamps: true,
+        timestamps: false,
         underscored: false,
         modelName: "User",
         tableName: "users",
-        paranoid: true,
+        paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
       }
@@ -41,16 +41,6 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post);
-    db.User.belongsToMany(db.User, {
-      foreignKey: "followingId",
-      as: "Followers",
-      through: "Follow",
-    });
-    db.User.belongsToMany(db.User, {
-      foreignKey: "followerId",
-      as: "Followings",
-      through: "Follow",
-    });
+    db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" });
   }
 };
